@@ -1,0 +1,6 @@
+{
+  "watch": ["server.js", "data.js"],
+  "ext": "js,json",
+  "exec": "node server.js",
+  "legacyWatch": true
+}
