@@ -1,7 +1,7 @@
 const data = {
   products: [
     {
-      _id: '1',
+      //_id: '1',
       name: 'Printed Maxi Summer Dress',
       slug: 'printed-summer-dress',
       color: 'Red',
@@ -16,7 +16,7 @@ const data = {
         'Printed summer dress with thin adjustable straps. V-neckline and wiring at the bust, fitted waist and flared skirt. Midi length.',
     },
     {
-      _id: '2',
+      //_id: '2',
       name: 'Printed Mini Party Wear Dress',
       slug: 'printed-summer-dress-2',
       color: 'Blue',
@@ -31,7 +31,7 @@ const data = {
         'Printed mini party wear dress with thin adjustable straps. U-neckline, fitted waist and flared skirt. Mini length.',
     },
     {
-      _id: '3',
+      //_id: '3',
       name: 'Printed Bodycon Dress',
       slug: 'printed-summer-dress-3',
       color: 'Green',
