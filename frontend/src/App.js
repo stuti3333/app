@@ -60,7 +60,7 @@ function App() {
       }
     };
     fetchCategories();
-  });
+  }, []);
   return (
     <BrowserRouter>
       <div
@@ -228,7 +228,7 @@ function App() {
                   </AdminRoute>
                 }
               ></Route>
-              <Route path="/search" element={<HomeScreen />} />
+
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
