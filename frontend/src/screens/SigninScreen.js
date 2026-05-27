@@ -20,10 +20,13 @@ export default function SigninScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Axios.post('/api/users/login', {
-        email,
-        password,
-      });
+      const { data } = await Axios.post(
+        `${process.env.REACT_APP_API_URL}/api/users/login`,
+        {
+          email,
+          password,
+        },
+      );
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');

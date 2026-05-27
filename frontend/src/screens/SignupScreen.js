@@ -26,11 +26,14 @@ export default function SignupScreen() {
       return;
     }
     try {
-      const { data } = await Axios.post('/api/users/signup', {
-        name,
-        email,
-        password,
-      });
+      const { data } = await Axios.post(
+        `${process.env.REACT_APP_API_URL}/api/users/signup`,
+        {
+          name,
+          email,
+          password,
+        },
+      );
       localStorage.removeItem('cartItems');
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));

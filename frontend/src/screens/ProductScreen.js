@@ -36,7 +36,9 @@ function ProductScreen() {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const response = await axios.get(`/api/products/slug/${slug}`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/products/slug/${slug}`,
+        );
         dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
