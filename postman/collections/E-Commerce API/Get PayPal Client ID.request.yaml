@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get PayPal Client ID
+method: GET
+url: '{{baseUrl}}/api/keys/paypal'
+order: 1000

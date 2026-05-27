@@ -1,0 +1,21 @@
+$kind: http-request
+name: Update Profile
+method: PUT
+url: '{{baseUrl}}/api/users/profile'
+order: 3000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{userToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "John Doe",
+      "email": "user@example.com",
+      "password": "newpassword123"
+    }

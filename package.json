@@ -1,0 +1,22 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "1. Create React App\r 2. Create Git Repository\r 3. List Products",
+  "homepage": "https://github.com/stuti3333/app#readme",
+  "bugs": {
+    "url": "https://github.com/stuti3333/app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stuti3333/app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

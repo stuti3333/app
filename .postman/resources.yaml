@@ -1,0 +1,17 @@
+workspace:
+  id: 8757719b-a971-4a95-8879-6daf42d35b73
+localResources:
+  docs:
+    - ..\frontend\README.md
+    - ..\README.md
+  collections:
+    - ../postman/collections/My Collection
+    - ../postman/collections/E-Commerce API
+  environments:
+    - ../postman/environments/E-Commerce Local.environment.yaml
+cloudResources:
+  collections:
+    ../postman/collections/My Collection: 50964901-b6e1ccb1-a0cc-4bc1-9076-7acfe9348758
+    ../postman/collections/E-Commerce API: 50964901-5b4f774d-f064-4082-acdb-5976b1350fbb
+  environments:
+    ../postman/environments/E-Commerce Local.environment.yaml: 50964901-b05c35df-0a0e-4e40-98ce-4af41fa1d84b

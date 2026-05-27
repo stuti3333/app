@@ -1,0 +1,5 @@
+$kind: http-request
+name: Seed Database
+method: GET
+url: '{{baseUrl}}/api/seed'
+order: 1000

@@ -1,0 +1,40 @@
+$kind: http-request
+name: Create Order
+method: POST
+url: '{{baseUrl}}/api/orders'
+order: 1000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{userToken}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "orderItems": [
+        {
+          "_id": "{{productId}}",
+          "slug": "slim-fit-shirt",
+          "name": "Slim Fit Shirt",
+          "quantity": 1,
+          "image": "/images/dress1.jpg",
+          "price": 29.99
+        }
+      ],
+      "shippingAddress": {
+        "fullName": "John Doe",
+        "address": "123 Main St",
+        "city": "New York",
+        "postalCode": "10001",
+        "country": "USA"
+      },
+      "paymentMethod": "PayPal",
+      "itemsPrice": 29.99,
+      "shippingPrice": 5.00,
+      "taxPrice": 3.00,
+      "totalPrice": 37.99
+    }

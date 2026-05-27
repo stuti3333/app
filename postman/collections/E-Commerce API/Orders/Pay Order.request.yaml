@@ -1,0 +1,25 @@
+$kind: http-request
+name: Pay Order
+method: PUT
+url: '{{baseUrl}}/api/orders/:id/pay'
+order: 4000
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{userToken}}'
+pathVariables:
+  - key: id
+    value: ''
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": "PAYPAL_PAYMENT_ID",
+      "status": "COMPLETED",
+      "update_time": "2024-01-01T00:00:00Z",
+      "email_address": "buyer@example.com"
+    }
