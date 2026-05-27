@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -20,20 +19,17 @@ mongoose
 
 const allowedOrigins = [
   'https://amazonclone-frontend-t7t9.onrender.com',
-  'http://localhost:3000', // for local testing
+  'http://localhost:3000',
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like Postman)
       if (!origin) return callback(null, true);
-
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
-      } else {
-        return callback(new Error('Not allowed by CORS'));
       }
+      return callback(null, true);
     },
     credentials: true,
   }),
