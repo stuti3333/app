@@ -54,7 +54,9 @@ export default function ProductEditScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/products/${productId}`);
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/products/${productId}`,
+        );
         setName(data.name);
         setSlug(data.slug);
         setPrice(data.price);
@@ -78,7 +80,7 @@ export default function ProductEditScreen() {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
       await axios.put(
-        `/api/products/${productId}`,
+        `${process.env.REACT_APP_API_URL}/api/products/${productId}`,
         {
           _id: productId,
           name,
