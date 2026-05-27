@@ -1,7 +1,7 @@
 name: E-Commerce Local
 values:
   - key: baseUrl
-    value: 'http://localhost:5000'
+    value: 'https://amazonclone-backend-tadc.onrender.com'
     enabled: true
     type: default
   - key: userToken
