@@ -7,7 +7,7 @@ import ProductScreen from './screens/ProductScreen';
 import { Container, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useEffect } from 'react';
-import toast from 'react-toastify';
+import { toast } from 'react-toastify';
 import { getError } from './utils';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
