@@ -131,6 +131,22 @@ export default function DashboardScreen() {
                   ['Date', 'Sales'],
                   ...summary.dailyOrders.map((x) => [x._id, x.sales]),
                 ]}
+                options={{
+                  backgroundColor: 'transparent',
+                  legend: { textStyle: { color: '#ffffff' } },
+                  hAxis: {
+                    textStyle: { color: '#cccccc' },
+                    titleTextStyle: { color: '#cccccc' },
+                    gridlines: { color: '#444444' },
+                  },
+                  vAxis: {
+                    textStyle: { color: '#cccccc' },
+                    titleTextStyle: { color: '#cccccc' },
+                    gridlines: { color: '#444444' },
+                  },
+                  areaOpacity: 0.3,
+                  colors: ['#667eea'],
+                }}
               ></Chart>
             )}
           </div>
@@ -148,6 +164,18 @@ export default function DashboardScreen() {
                   ['Category', 'Products'],
                   ...summary.productCategories.map((x) => [x._id, x.count]),
                 ]}
+                options={{
+                  backgroundColor: 'transparent',
+                  legend: { textStyle: { color: '#ffffff' } },
+                  pieSliceTextStyle: { color: '#ffffff' },
+                  colors: [
+                    '#667eea',
+                    '#764ba2',
+                    '#ff6b6b',
+                    '#4ecdc4',
+                    '#45b7d1',
+                  ],
+                }}
               ></Chart>
             )}
           </div>
