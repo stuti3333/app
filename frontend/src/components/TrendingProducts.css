@@ -3,6 +3,10 @@
   background: white;
 }
 
+body.dark-mode .trending-section {
+  background: #121212;
+}
+
 .section-header {
   text-align: center;
   margin-bottom: 50px;
@@ -15,10 +19,18 @@
   margin-bottom: 10px;
 }
 
+body.dark-mode .section-title {
+  color: #ffffff;
+}
+
 .section-subtitle {
   font-size: 1.1rem;
   color: #666;
   margin: 0;
+}
+
+body.dark-mode .section-subtitle {
+  color: #aaaaaa;
 }
 
 .trending-product-card {
@@ -86,6 +98,10 @@
   transition: color 0.3s ease;
 }
 
+body.dark-mode .product-name {
+  color: #ffffff;
+}
+
 .trending-product-card:hover .product-name {
   color: #667eea;
 }
@@ -130,11 +146,11 @@
   .trending-section {
     padding: 40px 0;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .product-image-wrapper {
     height: 150px;
   }

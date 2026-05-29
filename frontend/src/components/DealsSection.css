@@ -76,6 +76,10 @@
   height: 100%;
 }
 
+body.dark-mode .deal-product-card {
+  background: #1a1a1a;
+}
+
 .deal-product-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -126,6 +130,10 @@
   transition: color 0.3s ease;
 }
 
+body.dark-mode .deal-name {
+  color: #ffffff;
+}
+
 .deal-product-card:hover .deal-name {
   color: #ff6b6b;
 }
@@ -149,6 +157,10 @@
   text-decoration: line-through;
 }
 
+body.dark-mode .deal-original-price {
+  color: #888888;
+}
+
 .deal-btn {
   width: 100%;
   border-radius: 10px;
@@ -168,24 +180,24 @@
   .deals-section {
     padding: 40px 0;
   }
-  
+
   .deals-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .countdown-timer {
     padding: 15px 20px;
   }
-  
+
   .timer-value {
     font-size: 1.5rem;
   }
-  
+
   .deal-image-wrapper {
     height: 150px;
   }
