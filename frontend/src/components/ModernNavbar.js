@@ -27,7 +27,7 @@ const ModernNavbar = () => {
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('cartItems');
     localStorage.removeItem('paymentMethod');
-    window.location.href = '/signin';
+    window.location.href = '/';
   };
 
   useEffect(() => {
