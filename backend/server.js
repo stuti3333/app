@@ -54,12 +54,12 @@ const buildPath = path.join(__dirname, 'frontend', 'build');
 app.use(express.static(buildPath));
 
 // Catch-all route for React Router - must be after API routes
-app.get(/(.*)/, (req, res) => {
+app.use((req, res, next) => {
   // Don't serve index.html for API routes
   if (req.path.startsWith('/api')) {
-    res.status(404).send({ message: 'API endpoint not found' });
-    return;
+    return next();
   }
+  // Serve index.html for all other routes (React Router)
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 

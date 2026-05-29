@@ -12,11 +12,13 @@
 }
 
 .modern-navbar.dark-mode {
-  background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modern-navbar.dark-mode.scrolled {
-  background: rgba(15, 52, 96, 0.95);
+  background: rgba(15, 15, 26, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand-logo {
@@ -231,13 +233,15 @@
 .modern-navbar .input-group {
   display: flex;
   align-items: center;
+  height: 40px;
 }
 
 .modern-navbar .form-control {
-  height: 38px;
+  height: 40px;
   border: none;
   background: transparent;
   color: white;
+  padding: 0 12px;
 }
 
 .modern-navbar .form-control:focus {
@@ -254,7 +258,7 @@
   border: none;
   background: transparent;
   color: white;
-  height: 38px;
+  height: 40px;
   padding: 0 15px;
   display: flex;
   align-items: center;
@@ -270,7 +274,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  height: 38px;
+  height: 40px;
   padding: 0 15px;
   display: flex;
   align-items: center;
