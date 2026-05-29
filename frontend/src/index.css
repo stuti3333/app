@@ -1083,3 +1083,158 @@ body.dark-mode .chart-card h5 {
 body.dark-mode .chart-card p {
   color: var(--text-secondary);
 }
+
+/* User Card Styles */
+.user-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+body.dark-mode .user-card {
+  background-color: #111827;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #f9fafb;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+body.dark-mode .user-name {
+  color: #f9fafb;
+}
+
+.user-email {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+body.dark-mode .user-email {
+  color: #d1d5db;
+}
+
+.role-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.action-btn {
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all var(--transition-speed);
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Order Card Styles */
+.order-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all var(--transition-speed);
+  box-shadow: var(--shadow-sm);
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+body.dark-mode .order-card {
+  background-color: #111827;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #f9fafb;
+}
+
+.order-id-text,
+.customer-name,
+.order-date-text,
+.order-total-text {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+body.dark-mode .order-id-text,
+body.dark-mode .customer-name,
+body.dark-mode .order-date-text,
+body.dark-mode .order-total-text {
+  color: #f9fafb;
+}
+
+.customer-email {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+}
+
+body.dark-mode .customer-email {
+  color: #d1d5db;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.order-status {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.order-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Container Styles */
+.users-container,
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .user-card .user-actions,
+  .order-card .order-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .user-card .action-btn,
+  .order-card .action-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .order-card .order-status {
+    width: 100%;
+    justify-content: center;
+  }
+}

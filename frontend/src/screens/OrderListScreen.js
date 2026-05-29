@@ -1,17 +1,14 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
-import Badge from 'react-bootstrap/Badge';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import { Store } from '../Store';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Form from 'react-bootstrap/Form';
+import OrderCard from '../components/OrderCard';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -56,7 +53,6 @@ export default function OrderListScreen() {
       successDelete: false,
     });
 
-  const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
   const [searchQuery, setSearchQuery] = useState('');
@@ -142,78 +138,11 @@ export default function OrderListScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <>
-          <Table striped bordered hover responsive className="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>USER</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredOrders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id.substring(order._id.length - 6)}</td>
-                  <td>
-                    {order.user ? order.user.name : 'Unknown User'}
-                    <br />
-                    <small>{order.user ? order.user.email : ''}</small>
-                  </td>
-                  <td>
-                    {order.createdAt ? order.createdAt.substring(0, 10) : ''}
-                  </td>
-                  <td>${order.totalPrice.toFixed(2)}</td>
-                  <td>
-                    {order.isPaid ? (
-                      <Badge bg="success" className="status-badge">
-                        Yes
-                      </Badge>
-                    ) : (
-                      <Badge bg="danger" className="status-badge">
-                        No
-                      </Badge>
-                    )}
-                  </td>
-                  <td>
-                    {order.isDelivered ? (
-                      <Badge bg="success" className="status-badge">
-                        Yes
-                      </Badge>
-                    ) : (
-                      <Badge bg="danger" className="status-badge">
-                        No
-                      </Badge>
-                    )}
-                  </td>
-                  <td>
-                    <Button
-                      type="button"
-                      variant="light"
-                      className="admin-btn-primary"
-                      onClick={() => navigate(`/order/${order._id}`)}
-                    >
-                      View
-                    </Button>
-                    &nbsp;
-                    <Button
-                      type="button"
-                      variant="danger"
-                      className="admin-btn-danger"
-                      onClick={() => deleteHandler(order)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </>
+        <div className="orders-container">
+          {filteredOrders.map((order) => (
+            <OrderCard key={order._id} order={order} onDelete={deleteHandler} />
+          ))}
+        </div>
       )}
     </div>
   );
