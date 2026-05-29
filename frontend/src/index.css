@@ -1084,6 +1084,178 @@ body.dark-mode .chart-card p {
   color: var(--text-secondary);
 }
 
+/* Admin Grid Table Styles */
+.admin-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.admin-grid-header {
+  display: flex;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px;
+}
+
+.admin-grid-header-cell {
+  font-weight: 600;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  padding: 8px;
+}
+
+body.dark-mode .admin-grid-header-cell {
+  color: #f9fafb;
+}
+
+.admin-grid-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-grid-row {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px;
+  transition: all var(--transition-speed);
+  cursor: pointer;
+  background-color: var(--bg-primary);
+}
+
+.admin-grid-row:hover {
+  background-color: var(--bg-secondary);
+  transform: translateX(4px);
+}
+
+body.dark-mode .admin-grid-row {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+body.dark-mode .admin-grid-row:hover {
+  background-color: #1f2937;
+}
+
+.admin-grid-row:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+body.dark-mode .admin-grid-row:nth-child(even) {
+  background-color: #1f2937;
+}
+
+.admin-grid-row:nth-child(even):hover {
+  background-color: var(--bg-tertiary);
+}
+
+body.dark-mode .admin-grid-row:nth-child(even):hover {
+  background-color: #374151;
+}
+
+.admin-grid-cell {
+  color: var(--text-primary);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 0.95em;
+}
+
+body.dark-mode .admin-grid-cell {
+  color: #f9fafb;
+}
+
+/* Responsive Admin Grid */
+@media (max-width: 768px) {
+  .admin-grid-container {
+    border-radius: 8px;
+  }
+
+  .admin-grid-header {
+    display: none;
+  }
+
+  .admin-grid-row {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .admin-grid-cell {
+    width: 100%;
+    padding: 4px 0;
+  }
+
+  .admin-grid-cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75em;
+  }
+
+  body.dark-mode .admin-grid-cell::before {
+    color: #d1d5db;
+  }
+}
+
+/* Admin Grid Action Buttons */
+.admin-grid-cell .btn {
+  margin: 0 4px;
+  border-radius: 6px;
+  font-size: 0.85em;
+  padding: 6px 12px;
+}
+
+.admin-grid-cell .btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white !important;
+}
+
+.admin-grid-cell .btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.admin-grid-cell .btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: white !important;
+}
+
+.admin-grid-cell .btn-danger:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+.admin-grid-cell .btn-light {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary) !important;
+}
+
+.admin-grid-cell .btn-light:hover {
+  background-color: var(--bg-tertiary);
+}
+
+body.dark-mode .admin-grid-cell .btn-light {
+  background-color: #1f2937;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f9fafb !important;
+}
+
+body.dark-mode .admin-grid-cell .btn-light:hover {
+  background-color: #374151;
+}
+
 /* User Card Styles */
 .user-card {
   background-color: var(--bg-primary);

@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { Store } from '../Store';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import AdminTable from '../components/AdminTable';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -91,39 +92,41 @@ export default function ProductListScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <table className="table admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product._id.substring(product._id.length - 6)}</td>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <Button
-                      type="button"
-                      variant="light"
-                      className="admin-btn-primary"
-                      onClick={() => navigate(`/admin/product/${product._id}`)}
-                    >
-                      Edit
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <AdminTable
+            columns={[
+              {
+                key: 'id',
+                label: 'ID',
+                flex: 1,
+                render: (row) => row._id.substring(row._id.length - 6),
+              },
+              { key: 'name', label: 'NAME', flex: 2 },
+              {
+                key: 'price',
+                label: 'PRICE',
+                flex: 1,
+                render: (row) => `$${row.price}`,
+              },
+              { key: 'category', label: 'CATEGORY', flex: 1 },
+              { key: 'brand', label: 'BRAND', flex: 1 },
+              {
+                key: 'actions',
+                label: 'ACTIONS',
+                flex: 1,
+                render: (row) => (
+                  <Button
+                    type="button"
+                    variant="light"
+                    className="admin-btn-primary"
+                    onClick={() => navigate(`/admin/product/${row._id}`)}
+                  >
+                    Edit
+                  </Button>
+                ),
+              },
+            ]}
+            data={products}
+          />
           <div>
             {[...Array(pages).keys()].map((x) => (
               <Link

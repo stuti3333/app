@@ -9,6 +9,7 @@ import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { getError } from '../utils';
+import AdminTable from '../components/AdminTable';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -62,45 +63,60 @@ export default function OrderHistoryScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id.substring(order._id.length - 6)}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>${order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
-                <td>
-                  {order.isDelivered
-                    ? order.deliveredAt.substring(0, 10)
-                    : 'No'}
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    variant="light"
-                    className="admin-btn-primary"
-                    onClick={() => {
-                      navigate(`/order/${order._id}`);
-                    }}
-                  >
-                    Details
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <AdminTable
+          columns={[
+            {
+              key: 'id',
+              label: 'ID',
+              flex: 1,
+              render: (row) => row._id.substring(row._id.length - 6),
+            },
+            {
+              key: 'date',
+              label: 'DATE',
+              flex: 1,
+              render: (row) => row.createdAt.substring(0, 10),
+            },
+            {
+              key: 'total',
+              label: 'TOTAL',
+              flex: 1,
+              render: (row) => `$${row.totalPrice.toFixed(2)}`,
+            },
+            {
+              key: 'paid',
+              label: 'PAID',
+              flex: 1,
+              render: (row) =>
+                row.isPaid ? row.paidAt.substring(0, 10) : 'No',
+            },
+            {
+              key: 'delivered',
+              label: 'DELIVERED',
+              flex: 1,
+              render: (row) =>
+                row.isDelivered ? row.deliveredAt.substring(0, 10) : 'No',
+            },
+            {
+              key: 'actions',
+              label: 'ACTIONS',
+              flex: 1,
+              render: (row) => (
+                <Button
+                  type="button"
+                  variant="light"
+                  className="admin-btn-primary"
+                  onClick={() => {
+                    navigate(`/order/${row._id}`);
+                  }}
+                >
+                  Details
+                </Button>
+              ),
+            },
+          ]}
+          data={orders}
+        />
       )}
     </div>
   );
