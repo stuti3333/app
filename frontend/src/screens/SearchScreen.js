@@ -4,7 +4,6 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import { Helmet } from 'react-helmet-async';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Rating from '../components/Rating';
 import LoadingBox from '../components/LoadingBox';
@@ -269,119 +268,117 @@ export default function SearchScreen() {
         {voiceError && <div className="voice-error">{voiceError}</div>}
       </div>
 
-      <Row>
-        <Col md={3}>
-          <div className="filter-sidebar">
-            <div className="filter-section">
-              <h4 className="filter-section-title">
-                <i className="fas fa-th-large me-2"></i>Department
-              </h4>
-              <div className="filter-options">
-                <Link
-                  to={getFilterUrl({ category: 'all' })}
-                  className={`filter-option ${category === 'all' ? 'active' : ''}`}
-                >
-                  All Categories
-                </Link>
-                {categories.map((c) => (
+      <div className="products-page-wrapper">
+        <div className="products-content">
+          <Col md={3}>
+            <div className="filter-sidebar">
+              <div className="filter-section">
+                <h4 className="filter-section-title">
+                  <i className="fas fa-th-large me-2"></i>Department
+                </h4>
+                <div className="filter-options">
                   <Link
-                    key={c}
-                    to={getFilterUrl({ category: c })}
-                    className={`filter-option ${category === c ? 'active' : ''}`}
+                    to={getFilterUrl({ category: 'all' })}
+                    className={`filter-option ${category === 'all' ? 'active' : ''}`}
                   >
-                    {c}
+                    All Categories
                   </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="filter-section">
-              <h4 className="filter-section-title">
-                <i className="fas fa-dollar-sign me-2"></i>Price Range
-              </h4>
-              <div className="filter-options">
-                {prices.map((p) => (
-                  <Link
-                    key={p.value}
-                    to={getFilterUrl({ price: p.value })}
-                    className={`filter-option ${price === p.value ? 'active' : ''}`}
-                  >
-                    {p.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="filter-section">
-              <h4 className="filter-section-title">
-                <i className="fas fa-star me-2"></i>Customer Rating
-              </h4>
-              <div className="filter-options">
-                {ratings.map((r) => (
-                  <Link
-                    key={r.name}
-                    to={getFilterUrl({ rating: r.rating })}
-                    className={`filter-option ${rating === r.rating.toString() ? 'active' : ''}`}
-                  >
-                    <Rating rating={r.rating} caption=" & up" />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Col>
-
-        <Col md={9}>
-          {loading ? (
-            <LoadingBox />
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-            <>
-              <Row className="mb-3">
-                <Col>
-                  <div className="results-header">
-                    <h5>{countProducts} Results</h5>
-                    {category !== 'all' && (
-                      <span className="active-filter-badge">
-                        {category}
-                        <Link
-                          to={getFilterUrl({ category: 'all' })}
-                          className="filter-remove"
-                        >
-                          <i className="fas fa-times"></i>
-                        </Link>
-                      </span>
-                    )}
-                  </div>
-                </Col>
-              </Row>
-
-              <Row>
-                {products.map((product) => (
-                  <Col key={product._id} sm={6} lg={4}>
-                    <Product product={product} />
-                  </Col>
-                ))}
-              </Row>
-
-              {pages > 1 && (
-                <div className="pagination-container">
-                  {[...Array(pages).keys()].map((x) => (
+                  {categories.map((c) => (
                     <Link
-                      key={x + 1}
-                      className={`pagination-link ${page === x + 1 ? 'active' : ''}`}
-                      to={getFilterUrl({ page: x + 1 })}
+                      key={c}
+                      to={getFilterUrl({ category: c })}
+                      className={`filter-option ${category === c ? 'active' : ''}`}
                     >
-                      {x + 1}
+                      {c}
                     </Link>
                   ))}
                 </div>
-              )}
-            </>
-          )}
-        </Col>
-      </Row>
+              </div>
+
+              <div className="filter-section">
+                <h4 className="filter-section-title">
+                  <i className="fas fa-dollar-sign me-2"></i>Price Range
+                </h4>
+                <div className="filter-options">
+                  {prices.map((p) => (
+                    <Link
+                      key={p.value}
+                      to={getFilterUrl({ price: p.value })}
+                      className={`filter-option ${price === p.value ? 'active' : ''}`}
+                    >
+                      {p.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-section">
+                <h4 className="filter-section-title">
+                  <i className="fas fa-star me-2"></i>Customer Rating
+                </h4>
+                <div className="filter-options">
+                  {ratings.map((r) => (
+                    <Link
+                      key={r.name}
+                      to={getFilterUrl({ rating: r.rating })}
+                      className={`filter-option ${rating === r.rating.toString() ? 'active' : ''}`}
+                    >
+                      <Rating rating={r.rating} caption=" & up" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Col>
+
+          <Col md={9} className="product-grid">
+            {loading ? (
+              <LoadingBox />
+            ) : error ? (
+              <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
+              <>
+                <div className="results-header">
+                  <h5>{countProducts} Results</h5>
+                  {category !== 'all' && (
+                    <span className="active-filter-badge">
+                      {category}
+                      <Link
+                        to={getFilterUrl({ category: 'all' })}
+                        className="filter-remove"
+                      >
+                        <i className="fas fa-times"></i>
+                      </Link>
+                    </span>
+                  )}
+                </div>
+
+                <div className="product-grid-container">
+                  {products.map((product) => (
+                    <div key={product._id} className="product-grid-item">
+                      <Product product={product} />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </Col>
+        </div>
+
+        {pages > 1 && (
+          <div className="pagination-container">
+            {[...Array(pages).keys()].map((x) => (
+              <Link
+                key={x + 1}
+                className={`pagination-link ${page === x + 1 ? 'active' : ''}`}
+                to={getFilterUrl({ page: x + 1 })}
+              >
+                {x + 1}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
