@@ -125,3 +125,236 @@ body {
 .text-bold {
   font-weight: bold;
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #1a1a2e;
+  color: #eaeaea;
+}
+
+body.dark-mode .site-container {
+  background-color: #1a1a2e;
+}
+
+body.dark-mode .card {
+  background-color: #16213e;
+  border-color: #0f3460;
+  color: #eaeaea;
+}
+
+body.dark-mode .navbar {
+  background-color: #0f3460 !important;
+}
+
+body.dark-mode .navbar-dark .navbar-nav .nav-link {
+  color: #eaeaea;
+}
+
+body.dark-mode .side-navbar {
+  background-color: #0f3460;
+}
+
+body.dark-mode .btn-primary {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+body.dark-mode .btn-outline-primary {
+  color: #667eea;
+  border-color: #667eea;
+}
+
+body.dark-mode .form-control {
+  background-color: #16213e;
+  border-color: #0f3460;
+  color: #eaeaea;
+}
+
+body.dark-mode .form-control:focus {
+  background-color: #16213e;
+  border-color: #667eea;
+  color: #eaeaea;
+}
+
+body.dark-mode .list-group-item {
+  background-color: #16213e;
+  border-color: #0f3460;
+  color: #eaeaea;
+}
+
+body.dark-mode .modal-content {
+  background-color: #16213e;
+  color: #eaeaea;
+}
+
+body.dark-mode .table {
+  color: #eaeaea;
+}
+
+body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #1a1a2e;
+}
+
+body.dark-mode a {
+  color: #667eea;
+}
+
+body.dark-mode a:hover {
+  color: #764ba2;
+}
+
+/* Modern Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Modern Button Styles */
+.btn-modern {
+  border-radius: 50px;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Card Styles */
+.card-modern {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card-modern:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+body.dark-mode .skeleton {
+  background: linear-gradient(90deg, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%);
+}
+
+/* Modern Badge Styles */
+.badge-modern {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* Modern Input Styles */
+.form-control-modern {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control-modern:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+body.dark-mode .form-control-modern {
+  background-color: #16213e;
+  border-color: #0f3460;
+  color: #eaeaea;
+}
+
+body.dark-mode .form-control-modern:focus {
+  border-color: #667eea;
+  background-color: #16213e;
+}

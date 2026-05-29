@@ -124,4 +124,45 @@ orderRouter.put(
     }
   }),
 );
+
+orderRouter.put(
+  '/:id/deliver',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      const updatedOrder = await order.save();
+      res.send({ message: 'Order Delivered', order: updatedOrder });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  }),
+);
+
+orderRouter.put(
+  '/:id/tracking',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      if (req.body.location) {
+        order.shippingAddress.location = req.body.location;
+      }
+      if (req.body.trackingNumber) {
+        order.trackingNumber = req.body.trackingNumber;
+      }
+      if (req.body.estimatedDelivery) {
+        order.estimatedDelivery = req.body.estimatedDelivery;
+      }
+      const updatedOrder = await order.save();
+      res.send({ message: 'Tracking Updated', order: updatedOrder });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  }),
+);
+
 export default orderRouter;

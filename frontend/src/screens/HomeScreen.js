@@ -1,4 +1,3 @@
-//import data from '../data';
 import axios from 'axios';
 import { useEffect, useReducer } from 'react';
 import { Row, Col } from 'react-bootstrap';
@@ -6,6 +5,14 @@ import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import HeroBanner from '../components/HeroBanner';
+import CategoriesSection from '../components/CategoriesSection';
+import TrendingProducts from '../components/TrendingProducts';
+import DealsSection from '../components/DealsSection';
+import TrustBadges from '../components/TrustBadges';
+import ModernFooter from '../components/ModernFooter';
+import './HomeScreen.css';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -18,12 +25,14 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
     products: [],
   });
+
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -35,33 +44,53 @@ function HomeScreen() {
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: err.message });
       }
-
-      //setProducts(response.data);
     };
     fetchProducts();
   }, []);
+
   return (
-    <div>
+    <div className="home-screen">
       <Helmet>
-        <title>Amazon Clone</title>
+        <title>Amazon Clone - Premium Shopping Experience</title>
       </Helmet>
-      <h1>Featured Products</h1>
-      <div className="products">
-        {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-          <Row>
-            {products.map((product) => (
-              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                <Product product={product}></Product>
-              </Col>
-            ))}
-          </Row>
-        )}
-      </div>
+
+      <HeroBanner />
+
+      <CategoriesSection />
+
+      <TrendingProducts />
+
+      <DealsSection />
+
+      <TrustBadges />
+
+      <section className="featured-products-section">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Featured Products</h2>
+            <p className="section-subtitle">Handpicked products just for you</p>
+          </div>
+          <div className="products">
+            {loading ? (
+              <LoadingBox></LoadingBox>
+            ) : error ? (
+              <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
+              <Row>
+                {products.map((product) => (
+                  <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                    <Product product={product}></Product>
+                  </Col>
+                ))}
+              </Row>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <ModernFooter />
     </div>
   );
 }
+
 export default HomeScreen;

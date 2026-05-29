@@ -59,6 +59,7 @@ export default function SearchScreen() {
   const rating = sp.get('rating') || 'all';
   const order = sp.get('order') || 'newest';
   const page = sp.get('page') || 1;
+  const image = sp.get('image') || null;
 
   const API = process.env.REACT_APP_API_URL;
 
@@ -72,10 +73,24 @@ export default function SearchScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          `${API}/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`,
-        );
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        let url;
+        if (image) {
+          url = `${API}/api/products/image-search`;
+          const { data } = await axios.post(url, { image });
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            payload: {
+              products: data,
+              page: 1,
+              pages: 1,
+              countProducts: data.length,
+            },
+          });
+        } else {
+          url = `${API}/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`;
+          const { data } = await axios.get(url);
+          dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        }
       } catch (err) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -84,7 +99,7 @@ export default function SearchScreen() {
       }
     };
     fetchData();
-  }, [API, category, order, page, price, query, rating]);
+  }, [API, category, order, page, price, query, rating, image]);
 
   const [categories, setCategories] = useState([]);
 

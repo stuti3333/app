@@ -191,4 +191,40 @@ productRouter.get(
   }),
 );
 
+productRouter.post(
+  '/image-search',
+  expressAsyncHandler(async (req, res) => {
+    const { image } = req.body;
+
+    // Simple image search implementation
+    // In production, you would use AI/ML services like Google Vision API, Clarifai, etc.
+    // For now, we'll return all products as a placeholder
+    // You can enhance this by integrating with image recognition APIs
+
+    try {
+      // Placeholder: Return all products sorted by relevance
+      // In a real implementation, you would:
+      // 1. Send the image to an AI service
+      // 2. Get product categories/features from the image
+      // 3. Search products based on those features
+
+      const products = await Product.find({});
+
+      // Simulate relevance scoring (in production, this would come from AI)
+      const scoredProducts = products
+        .map((product) => ({
+          ...product.toObject(),
+          relevanceScore: Math.random(), // Random score for demo
+        }))
+        .sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+      res.send(scoredProducts);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: 'Image search failed', error: error.message });
+    }
+  }),
+);
+
 export default productRouter;

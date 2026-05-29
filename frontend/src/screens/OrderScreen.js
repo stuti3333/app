@@ -163,6 +163,15 @@ export default function OrderScreen() {
               ) : (
                 <MessageBox variant="danger">Not Delivered</MessageBox>
               )}
+              <div className="mt-3">
+                <Link
+                  to={`/order/${orderId}/track`}
+                  className="btn btn-primary"
+                >
+                  <i className="fas fa-truck me-2"></i>
+                  Track Delivery
+                </Link>
+              </div>
             </Card.Body>
           </Card>
           <Card className="mb-3">

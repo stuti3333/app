@@ -4,21 +4,15 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
-import { Container, Navbar } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getError } from './utils';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import { Badge } from 'react-bootstrap';
-import { useContext } from 'react';
-import SearchBox from './components/SearchBox';
-import { Store } from './Store';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SignupScreen from './screens/SignupScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
@@ -27,24 +21,17 @@ import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import SearchScreen from './screens/SearchScreen';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardScreen from './screens/DashboardScreen';
 import AdminRoute from './components/AdminRoute';
 import ProfileScreen from './screens/ProfileScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
-function App() {
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
-  const signOutHandler = () => {
-    ctxDispatch({ type: 'USER_SIGNOUT' });
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('shippingAddress');
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('paymentMethod');
-    window.location.href = '/signin';
-  };
+import DeliveryTrackingScreen from './screens/DeliveryTrackingScreen';
+import { DarkModeProvider } from './context/DarkModeContext';
+import ModernNavbar from './components/ModernNavbar';
+
+function AppContent() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -72,72 +59,7 @@ function App() {
       >
         <ToastContainer position="bottom-center" limit={1} />
         <header>
-          <Navbar bg="dark" variant="dark" expand="lg">
-            <Container>
-              <Button
-                variant="dark"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-              >
-                {' '}
-                <i className="fas fa-bars"></i>
-              </Button>
-              <LinkContainer to="/">
-                <Navbar.Brand>Amazon Clone</Navbar.Brand>
-              </LinkContainer>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <SearchBox />
-                <Nav className="me-auto w-100 justify-content-end">
-                  <Link to="/cart" className="nav-link">
-                    Cart
-                    {cart.items.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.items.reduce((a, c) => a + c.quantity, 0)}
-                      </Badge>
-                    )}
-                  </Link>
-                  {userInfo ? (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Divider />
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signOutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown>
-                  ) : (
-                    <Link to="/signin" className="nav-link">
-                      Sign In
-                    </Link>
-                  )}
-                  {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer>
-                    </NavDropdown>
-                  )}
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
+          <ModernNavbar />
         </header>
         <div
           className={
@@ -201,6 +123,15 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/order/:id/track"
+                element={
+                  <ProtectedRoute>
+                    {' '}
+                    <DeliveryTrackingScreen />{' '}
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route
@@ -236,6 +167,14 @@ function App() {
         <footer className="text-center">All rights reserved</footer>
       </div>
     </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <DarkModeProvider>
+      <AppContent />
+    </DarkModeProvider>
   );
 }
 

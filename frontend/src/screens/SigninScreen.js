@@ -15,6 +15,7 @@ export default function SigninScreen() {
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const submitHandler = async (e) => {
@@ -29,7 +30,16 @@ export default function SigninScreen() {
       );
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
+
+      if (role === 'admin' && data.isAdmin) {
+        navigate('/admin/dashboard');
+      } else if (role === 'admin' && !data.isAdmin) {
+        toast.error('You do not have admin privileges');
+        ctxDispatch({ type: 'USER_SIGNOUT' });
+        localStorage.removeItem('userInfo');
+      } else {
+        navigate(redirect || '/');
+      }
     } catch (err) {
       toast.error(getError(err));
     }
@@ -47,6 +57,13 @@ export default function SigninScreen() {
       </Helmet>
       <h1 className="my-3">Sign In</h1>
       <Form onSubmit={submitHandler}>
+        <Form.Group className="mb-3" controlId="role">
+          <Form.Label>Login as</Form.Label>
+          <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </Form.Select>
+        </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address</Form.Label>
           <Form.Control
