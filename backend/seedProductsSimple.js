@@ -664,12 +664,14 @@ const generateProducts = (category, count, baseData) => {
     const productName = baseData.names[i % baseData.names.length];
     const uniqueName = `${productName} - ${category} ${i + 1}`;
     const isOutOfStock = Math.random() < 0.15; // 15% chance of being out of stock
+    // Add random parameter to image URL to ensure uniqueness
+    const imageUrl = `${baseData.images[i % baseData.images.length]}&sig=${Math.floor(Math.random() * 1000000)}`;
     products.push({
       name: uniqueName,
       slug: `${productName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${category.toLowerCase()}-${i + 1}`,
       color: baseData.colors[i % baseData.colors.length],
       category: category,
-      image: baseData.images[i % baseData.images.length],
+      image: imageUrl,
       price:
         baseData.priceRange[0] +
         Math.random() * (baseData.priceRange[1] - baseData.priceRange[0]),

@@ -13,6 +13,11 @@ function Product(props) {
     cart: { items },
   } = state;
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const addToCartHandler = async (item) => {
     const existItem = items.find((x) => x._id === product._id);
@@ -46,14 +51,17 @@ function Product(props) {
         <Link to={`/product/${product.slug}`}>
           <img
             src={
-              product.image.startsWith('http')
-                ? product.image
-                : product.image.startsWith('/')
+              imageError
+                ? 'https://via.placeholder.com/500x500?text=Image+Not+Available'
+                : product.image.startsWith('http')
                   ? product.image
-                  : `/${product.image}`
+                  : product.image.startsWith('/')
+                    ? product.image
+                    : `/${product.image}`
             }
             className="card-img-top product-image"
             alt={product.name}
+            onError={handleImageError}
           />
         </Link>
         <button

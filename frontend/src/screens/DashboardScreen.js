@@ -8,6 +8,8 @@ import MessageBox from '../components/MessageBox';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -57,6 +59,19 @@ export default function DashboardScreen() {
   return (
     <div>
       <h1>Dashboard</h1>
+      <Row className="mb-3">
+        <Col>
+          <Link to="/admin/products">
+            <Button variant="primary">Products</Button>
+          </Link>{' '}
+          <Link to="/admin/orders">
+            <Button variant="primary">Orders</Button>
+          </Link>{' '}
+          <Link to="/admin/users">
+            <Button variant="primary">Users</Button>
+          </Link>
+        </Col>
+      </Row>
       {loading ? (
         <LoadingBox />
       ) : error ? (
