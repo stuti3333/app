@@ -9,9 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Rating from '../components/Rating';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import Button from 'react-bootstrap/Button';
 import Product from '../components/Product';
-import { LinkContainer } from 'react-router-bootstrap';
 import { RealtimeTranscriber } from 'assemblyai';
 import './SearchScreen.css';
 
