@@ -27,6 +27,7 @@ import AdminRoute from './components/AdminRoute';
 import ProfileScreen from './screens/ProfileScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import ProductCreateScreen from './screens/ProductCreateScreen';
 import DeliveryTrackingScreen from './screens/DeliveryTrackingScreen';
 import { DarkModeProvider } from './context/DarkModeContext';
 import ModernNavbar from './components/ModernNavbar';
@@ -148,6 +149,14 @@ function AppContent() {
                 element={
                   <AdminRoute>
                     <ProductListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/admin/product/create"
+                element={
+                  <AdminRoute>
+                    <ProductCreateScreen />
                   </AdminRoute>
                 }
               ></Route>
