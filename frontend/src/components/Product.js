@@ -45,7 +45,13 @@ function Product(props) {
       <div className="product-image-container">
         <Link to={`/product/${product.slug}`}>
           <img
-            src={product.image}
+            src={
+              product.image.startsWith('http')
+                ? product.image
+                : product.image.startsWith('/')
+                  ? product.image
+                  : `/${product.image}`
+            }
             className="card-img-top product-image"
             alt={product.name}
           />

@@ -12,6 +12,7 @@ import MessageBox from '../components/MessageBox';
 import Button from 'react-bootstrap/Button';
 import Product from '../components/Product';
 import { LinkContainer } from 'react-router-bootstrap';
+import './SearchScreen.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -136,37 +137,64 @@ export default function SearchScreen() {
 
       <Row>
         <Col md={3}>
-          <h3>Department</h3>
-          <ul>
-            <li>
-              <Link to={getFilterUrl({ category: 'all' })}>Any</Link>
-            </li>
-            {categories.map((c) => (
-              <li key={c}>
-                <Link to={getFilterUrl({ category: c })}>{c}</Link>
-              </li>
-            ))}
-          </ul>
-
-          <h3>Price</h3>
-          <ul>
-            {prices.map((p) => (
-              <li key={p.value}>
-                <Link to={getFilterUrl({ price: p.value })}>{p.name}</Link>
-              </li>
-            ))}
-          </ul>
-
-          <h3>Rating</h3>
-          <ul>
-            {ratings.map((r) => (
-              <li key={r.name}>
-                <Link to={getFilterUrl({ rating: r.rating })}>
-                  <Rating rating={r.rating} caption=" & up" />
+          <div className="filter-sidebar">
+            <div className="filter-section">
+              <h4 className="filter-section-title">
+                <i className="fas fa-th-large me-2"></i>Department
+              </h4>
+              <div className="filter-options">
+                <Link
+                  to={getFilterUrl({ category: 'all' })}
+                  className={`filter-option ${category === 'all' ? 'active' : ''}`}
+                >
+                  All Categories
                 </Link>
-              </li>
-            ))}
-          </ul>
+                {categories.map((c) => (
+                  <Link
+                    key={c}
+                    to={getFilterUrl({ category: c })}
+                    className={`filter-option ${category === c ? 'active' : ''}`}
+                  >
+                    {c}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="filter-section">
+              <h4 className="filter-section-title">
+                <i className="fas fa-dollar-sign me-2"></i>Price Range
+              </h4>
+              <div className="filter-options">
+                {prices.map((p) => (
+                  <Link
+                    key={p.value}
+                    to={getFilterUrl({ price: p.value })}
+                    className={`filter-option ${price === p.value ? 'active' : ''}`}
+                  >
+                    {p.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="filter-section">
+              <h4 className="filter-section-title">
+                <i className="fas fa-star me-2"></i>Customer Rating
+              </h4>
+              <div className="filter-options">
+                {ratings.map((r) => (
+                  <Link
+                    key={r.name}
+                    to={getFilterUrl({ rating: r.rating })}
+                    className={`filter-option ${rating === r.rating.toString() ? 'active' : ''}`}
+                  >
+                    <Rating rating={r.rating} caption=" & up" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </Col>
 
         <Col md={9}>
@@ -176,8 +204,23 @@ export default function SearchScreen() {
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
             <>
-              <Row>
-                <Col>{countProducts} Results</Col>
+              <Row className="mb-3">
+                <Col>
+                  <div className="results-header">
+                    <h5>{countProducts} Results</h5>
+                    {category !== 'all' && (
+                      <span className="active-filter-badge">
+                        {category}
+                        <Link
+                          to={getFilterUrl({ category: 'all' })}
+                          className="filter-remove"
+                        >
+                          <i className="fas fa-times"></i>
+                        </Link>
+                      </span>
+                    )}
+                  </div>
+                </Col>
               </Row>
 
               <Row>
@@ -187,6 +230,20 @@ export default function SearchScreen() {
                   </Col>
                 ))}
               </Row>
+
+              {pages > 1 && (
+                <div className="pagination-container">
+                  {[...Array(pages).keys()].map((x) => (
+                    <Link
+                      key={x + 1}
+                      className={`pagination-link ${page === x + 1 ? 'active' : ''}`}
+                      to={getFilterUrl({ page: x + 1 })}
+                    >
+                      {x + 1}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </>
           )}
         </Col>

@@ -74,7 +74,11 @@ function ProductScreen() {
         <Col md={6}>
           <img
             className="img-large"
-            src={`/${product.image}`}
+            src={
+              product.image.startsWith('http')
+                ? product.image
+                : `/${product.image}`
+            }
             alt={product.name}
           />
         </Col>
