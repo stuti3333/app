@@ -141,6 +141,7 @@ export default function UserListScreen() {
             placeholder="Search users..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="admin-search"
             style={{ maxWidth: '300px' }}
           />
         </Col>
@@ -153,7 +154,7 @@ export default function UserListScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Table striped bordered hover responsive>
+          <Table striped bordered hover responsive className="admin-table">
             <thead>
               <tr>
                 <th>ID</th>

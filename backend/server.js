@@ -48,11 +48,21 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
-app.use(express.static(path.join(__dirname, '/frontend/build')));
 
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '/frontend/build/index.html'));
+// Serve static files from React build
+const buildPath = path.join(__dirname, 'frontend', 'build');
+app.use(express.static(buildPath));
+
+// Catch-all route for React Router - must be after API routes
+app.get('*', (req, res) => {
+  // Don't serve index.html for API routes
+  if (req.path.startsWith('/api')) {
+    res.status(404).send({ message: 'API endpoint not found' });
+    return;
+  }
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
+
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });

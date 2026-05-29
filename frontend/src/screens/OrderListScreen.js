@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import Badge from 'react-bootstrap/Badge';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import { Store } from '../Store';
@@ -129,6 +130,7 @@ export default function OrderListScreen() {
             placeholder="Search orders..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="admin-search"
             style={{ maxWidth: '300px' }}
           />
         </Col>
@@ -141,7 +143,7 @@ export default function OrderListScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Table striped bordered hover responsive>
+          <Table striped bordered hover responsive className="admin-table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -168,22 +170,31 @@ export default function OrderListScreen() {
                   <td>${order.totalPrice.toFixed(2)}</td>
                   <td>
                     {order.isPaid ? (
-                      <span style={{ color: 'green' }}>Yes</span>
+                      <Badge bg="success" className="status-badge">
+                        Yes
+                      </Badge>
                     ) : (
-                      <span style={{ color: 'red' }}>No</span>
+                      <Badge bg="danger" className="status-badge">
+                        No
+                      </Badge>
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
-                      <span style={{ color: 'green' }}>Yes</span>
+                      <Badge bg="success" className="status-badge">
+                        Yes
+                      </Badge>
                     ) : (
-                      <span style={{ color: 'red' }}>No</span>
+                      <Badge bg="danger" className="status-badge">
+                        No
+                      </Badge>
                     )}
                   </td>
                   <td>
                     <Button
                       type="button"
                       variant="light"
+                      className="admin-btn-primary"
                       onClick={() => navigate(`/order/${order._id}`)}
                     >
                       View
@@ -192,6 +203,7 @@ export default function OrderListScreen() {
                     <Button
                       type="button"
                       variant="danger"
+                      className="admin-btn-danger"
                       onClick={() => deleteHandler(order)}
                     >
                       Delete
