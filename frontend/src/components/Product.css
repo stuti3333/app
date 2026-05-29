@@ -158,15 +158,33 @@
   border: 1px solid #dee2e6;
 }
 
+.out-of-stock-container {
+  position: relative;
+}
+
+.out-of-stock-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+  z-index: 3;
+}
+
 @media (max-width: 768px) {
   .product-image-container {
     height: 200px;
   }
-  
+
   .product-title {
     font-size: 1rem;
   }
-  
+
   .product-price {
     font-size: 1.1rem;
   }

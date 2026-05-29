@@ -29,7 +29,7 @@ const DealsSection = () => {
     days: 2,
     hours: 15,
     minutes: 30,
-    seconds: 45
+    seconds: 45,
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const DealsSection = () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/products?sort=-price&limit=4`
+          `${process.env.REACT_APP_API_URL}/api/products/random/5`,
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -49,9 +49,9 @@ const DealsSection = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         let { days, hours, minutes, seconds } = prev;
-        
+
         if (seconds > 0) {
           seconds--;
         } else if (minutes > 0) {
@@ -67,7 +67,7 @@ const DealsSection = () => {
           minutes = 59;
           seconds = 59;
         }
-        
+
         return { days, hours, minutes, seconds };
       });
     }, 1000);
@@ -81,26 +81,36 @@ const DealsSection = () => {
         <div className="deals-header">
           <div className="deals-title-section">
             <h2 className="section-title">Flash Deals</h2>
-            <p className="section-subtitle">Limited time offers - Don't miss out!</p>
+            <p className="section-subtitle">
+              Limited time offers - Don't miss out!
+            </p>
           </div>
           <div className="countdown-timer">
             <div className="timer-block">
-              <span className="timer-value">{String(timeLeft.days).padStart(2, '0')}</span>
+              <span className="timer-value">
+                {String(timeLeft.days).padStart(2, '0')}
+              </span>
               <span className="timer-label">Days</span>
             </div>
             <span className="timer-separator">:</span>
             <div className="timer-block">
-              <span className="timer-value">{String(timeLeft.hours).padStart(2, '0')}</span>
+              <span className="timer-value">
+                {String(timeLeft.hours).padStart(2, '0')}
+              </span>
               <span className="timer-label">Hours</span>
             </div>
             <span className="timer-separator">:</span>
             <div className="timer-block">
-              <span className="timer-value">{String(timeLeft.minutes).padStart(2, '0')}</span>
+              <span className="timer-value">
+                {String(timeLeft.minutes).padStart(2, '0')}
+              </span>
               <span className="timer-label">Mins</span>
             </div>
             <span className="timer-separator">:</span>
             <div className="timer-block">
-              <span className="timer-value">{String(timeLeft.seconds).padStart(2, '0')}</span>
+              <span className="timer-value">
+                {String(timeLeft.seconds).padStart(2, '0')}
+              </span>
               <span className="timer-label">Secs</span>
             </div>
           </div>
@@ -120,13 +130,18 @@ const DealsSection = () => {
               <Col key={product._id} xs={12} md={6} lg={3}>
                 <Card className="deal-product-card">
                   <div className="deal-badge">
-                    <Badge bg="danger">-{Math.floor(Math.random() * 30 + 20)}% OFF</Badge>
+                    <Badge bg="danger">
+                      -{Math.floor(Math.random() * 30 + 20)}% OFF
+                    </Badge>
                   </div>
-                  <Link to={`/product/${product.slug}`} className="deal-image-link">
+                  <Link
+                    to={`/product/${product.slug}`}
+                    className="deal-image-link"
+                  >
                     <div className="deal-image-wrapper">
-                      <Card.Img 
-                        variant="top" 
-                        src={product.image} 
+                      <Card.Img
+                        variant="top"
+                        src={product.image}
                         alt={product.name}
                         className="deal-image"
                       />
@@ -134,17 +149,24 @@ const DealsSection = () => {
                   </Link>
                   <Card.Body>
                     <Link to={`/product/${product.slug}`} className="deal-link">
-                      <Card.Title className="deal-name">{product.name}</Card.Title>
+                      <Card.Title className="deal-name">
+                        {product.name}
+                      </Card.Title>
                     </Link>
-                    <Rating rating={product.rating} numReviews={product.numReviews} />
+                    <Rating
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    />
                     <div className="deal-price-section">
-                      <span className="deal-price">${product.price.toFixed(2)}</span>
+                      <span className="deal-price">
+                        ${product.price.toFixed(2)}
+                      </span>
                       <span className="deal-original-price">
                         ${(product.price * 1.3).toFixed(2)}
                       </span>
                     </div>
-                    <Button 
-                      variant="danger" 
+                    <Button
+                      variant="danger"
                       className="deal-btn"
                       as={Link}
                       to={`/product/${product.slug}`}

@@ -89,9 +89,12 @@ function Product(props) {
           )}
         </div>
         {product.countInStock === 0 ? (
-          <Button variant="light" className="out-of-stock-btn" disabled>
-            Out of Stock
-          </Button>
+          <div className="out-of-stock-container">
+            <Button variant="light" className="out-of-stock-btn" disabled>
+              Out of Stock
+            </Button>
+            <span className="out-of-stock-badge">Sold Out</span>
+          </div>
         ) : (
           <Button
             variant="primary"

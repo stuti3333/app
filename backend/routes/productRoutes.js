@@ -189,6 +189,15 @@ productRouter.get(
 );
 
 productRouter.get(
+  '/random/:limit',
+  expressAsyncHandler(async (req, res) => {
+    const limit = parseInt(req.params.limit) || 5;
+    const products = await Product.aggregate([{ $sample: { size: limit } }]);
+    res.send(products);
+  }),
+);
+
+productRouter.get(
   '/slug/:slug',
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug });

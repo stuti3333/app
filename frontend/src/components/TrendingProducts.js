@@ -30,7 +30,7 @@ const TrendingProducts = () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/products?sort=-rating&limit=8`
+          `${process.env.REACT_APP_API_URL}/api/products/random/5`,
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -61,11 +61,14 @@ const TrendingProducts = () => {
             {products.map((product) => (
               <Col key={product._id} xs={6} md={4} lg={3}>
                 <Card className="trending-product-card">
-                  <Link to={`/product/${product.slug}`} className="product-image-link">
+                  <Link
+                    to={`/product/${product.slug}`}
+                    className="product-image-link"
+                  >
                     <div className="product-image-wrapper">
-                      <Card.Img 
-                        variant="top" 
-                        src={product.image} 
+                      <Card.Img
+                        variant="top"
+                        src={product.image}
                         alt={product.name}
                         className="product-image"
                       />
@@ -73,18 +76,28 @@ const TrendingProducts = () => {
                     </div>
                   </Link>
                   <Card.Body>
-                    <Link to={`/product/${product.slug}`} className="product-link">
-                      <Card.Title className="product-name">{product.name}</Card.Title>
+                    <Link
+                      to={`/product/${product.slug}`}
+                      className="product-link"
+                    >
+                      <Card.Title className="product-name">
+                        {product.name}
+                      </Card.Title>
                     </Link>
-                    <Rating rating={product.rating} numReviews={product.numReviews} />
+                    <Rating
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    />
                     <div className="product-price-section">
-                      <span className="product-price">${product.price.toFixed(2)}</span>
+                      <span className="product-price">
+                        ${product.price.toFixed(2)}
+                      </span>
                       {product.countInStock > 0 && (
                         <span className="product-stock">In Stock</span>
                       )}
                     </div>
-                    <Button 
-                      variant="primary" 
+                    <Button
+                      variant="primary"
                       className="add-to-cart-btn"
                       as={Link}
                       to={`/product/${product.slug}`}
