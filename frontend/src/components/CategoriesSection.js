@@ -47,7 +47,7 @@ const CategoriesSection = () => {
       id: 6,
       name: 'Sports',
       image:
-        'https://images.unsplash.com/photo-1461896836934-561709ea56e3?w=400',
+        'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400',
       icon: 'fas fa-futbol',
     },
     {
