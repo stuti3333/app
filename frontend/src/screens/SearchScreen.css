@@ -1,3 +1,182 @@
+/* Search Bar Styles */
+.search-bar-container {
+  margin-bottom: 25px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #f1f3f4;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 6px 12px;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: #111;
+  width: 100%;
+  padding: 8px;
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+.mic-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  color: #555;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.mic-btn:hover {
+  background: #e0e0e0;
+  color: #111;
+}
+
+.mic-btn.listening {
+  color: #fff;
+  background: #e53935;
+  animation: pulse-btn 1s infinite;
+}
+
+.listening-badge {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #e53935;
+  position: absolute;
+  bottom: -28px;
+  left: 12px;
+  white-space: nowrap;
+}
+
+.listening-badge.active {
+  display: flex;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #e53935;
+  border-radius: 50%;
+  animation: pulse-dot 1s infinite;
+}
+
+.voice-error {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #ffebee;
+  border-radius: 8px;
+  border-left: 3px solid #e53935;
+}
+
+@keyframes pulse-btn {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* Dark Mode Search Bar */
+body.dark-mode .search-wrapper {
+  background: #2a2a3d;
+  border-color: #444;
+}
+
+body.dark-mode .search-input {
+  color: #f0f0f0;
+}
+
+body.dark-mode .search-input::placeholder {
+  color: #888;
+}
+
+body.dark-mode .mic-btn {
+  color: #aaa;
+}
+
+body.dark-mode .mic-btn:hover {
+  background: #3a3a4f;
+  color: #fff;
+}
+
+body.dark-mode .mic-btn.listening {
+  background: #e53935;
+  color: #fff;
+}
+
+body.dark-mode .listening-badge {
+  color: #ff6b6b;
+}
+
+body.dark-mode .pulse-dot {
+  background: #ff6b6b;
+}
+
+body.dark-mode .voice-error {
+  color: #ff6b6b;
+  background: #3d1f1f;
+  border-left-color: #ff6b6b;
+}
+
+/* Mobile Responsive Search Bar */
+@media (max-width: 768px) {
+  .search-wrapper {
+    padding: 8px 10px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+
+  .mic-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .listening-badge {
+    position: static;
+    margin-top: 8px;
+    justify-content: flex-start;
+  }
+
+  .voice-error {
+    font-size: 12px;
+  }
+}
+
 .filter-sidebar {
   background: white;
   border-radius: 15px;

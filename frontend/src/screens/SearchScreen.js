@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import MessageBox from '../components/MessageBox';
 import Button from 'react-bootstrap/Button';
 import Product from '../components/Product';
 import { LinkContainer } from 'react-router-bootstrap';
+import { RealtimeTranscriber } from 'assemblyai';
 import './SearchScreen.css';
 
 const reducer = (state, action) => {
@@ -71,6 +72,13 @@ export default function SearchScreen() {
       products: [],
     });
 
+  // Voice search state
+  const [searchQuery, setSearchQuery] = useState(query === 'all' ? '' : query);
+  const [listening, setListening] = useState(false);
+  const [voiceError, setVoiceError] = useState('');
+  const transcriberRef = useRef(null);
+  const microphoneRef = useRef(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -129,11 +137,139 @@ export default function SearchScreen() {
     return `/search?category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
 
+  const handleSearch = (searchText) => {
+    if (searchText.trim()) {
+      navigate(getFilterUrl({ query: searchText, page: 1 }));
+    }
+  };
+
+  const startVoiceSearch = async () => {
+    setVoiceError('');
+    try {
+      const { token } = await fetch(`${API}/api/assemblyai-token`).then((r) =>
+        r.json(),
+      );
+
+      const transcriber = new RealtimeTranscriber({
+        token,
+        sampleRate: 16000,
+        onTranscript: (transcript) => {
+          if (transcript.message_type === 'FinalTranscript') {
+            const text = transcript.text;
+            setSearchQuery(text);
+            handleSearch(text);
+            stopVoiceSearch();
+          } else {
+            setSearchQuery(transcript.text);
+          }
+        },
+        onError: (err) => {
+          console.error('AssemblyAI error:', err);
+          setVoiceError('Voice search unavailable. Please try again.');
+          stopVoiceSearch();
+        },
+      });
+
+      await transcriber.connect();
+      transcriberRef.current = transcriber;
+
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const microphone = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      microphone.ondataavailable = (e) => transcriber.sendAudio(e.data);
+      microphone.start(250);
+      microphoneRef.current = microphone;
+
+      setListening(true);
+    } catch (err) {
+      console.error('Voice search error:', err);
+      if (
+        err.name === 'NotAllowedError' ||
+        err.name === 'PermissionDeniedError'
+      ) {
+        setVoiceError(
+          'Microphone access denied. Please allow mic access in your browser settings.',
+        );
+      } else {
+        setVoiceError('Voice search unavailable. Please try again.');
+      }
+    }
+  };
+
+  const stopVoiceSearch = async () => {
+    if (microphoneRef.current) {
+      microphoneRef.current.stop();
+      microphoneRef.current = null;
+    }
+    if (transcriberRef.current) {
+      await transcriberRef.current.close();
+      transcriberRef.current = null;
+    }
+    setListening(false);
+  };
+
+  const toggleVoiceSearch = () => {
+    if (listening) {
+      stopVoiceSearch();
+    } else {
+      startVoiceSearch();
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopVoiceSearch();
+    };
+  }, []);
+
   return (
     <div>
       <Helmet>
         <title>Search Products</title>
       </Helmet>
+
+      <div className="search-bar-container">
+        <div className="search-wrapper">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch(searchQuery);
+              }
+            }}
+          />
+          <button
+            className={`mic-btn ${listening ? 'listening' : ''}`}
+            onClick={toggleVoiceSearch}
+            aria-label="Voice search"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </button>
+          <div className={`listening-badge ${listening ? 'active' : ''}`}>
+            <span className="pulse-dot"></span> Listening...
+          </div>
+        </div>
+        {voiceError && <div className="voice-error">{voiceError}</div>}
+      </div>
 
       <Row>
         <Col md={3}>

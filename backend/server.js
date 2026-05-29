@@ -7,6 +7,7 @@ import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
+import { AssemblyAI } from 'assemblyai';
 
 dotenv.config();
 
@@ -42,6 +43,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/keys/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+});
+
+// AssemblyAI token endpoint
+app.get('/api/assemblyai-token', async (req, res) => {
+  try {
+    const client = new AssemblyAI({ apiKey: process.env.ASSEMBLYAI_API_KEY });
+    const token = await client.realtime.createTemporaryToken({
+      expires_in: 480,
+    });
+    res.json({ token });
+  } catch (error) {
+    console.error('AssemblyAI token error:', error);
+    res.status(500).json({ message: 'Failed to generate AssemblyAI token' });
+  }
 });
 
 app.use('/api/seed', seedRouter);

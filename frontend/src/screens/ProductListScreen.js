@@ -105,7 +105,7 @@ export default function ProductListScreen() {
                 key: 'price',
                 label: 'PRICE',
                 flex: 1,
-                render: (row) => `$${row.price}`,
+                render: (row) => `$${Number(row.price).toFixed(2)}`,
               },
               { key: 'category', label: 'CATEGORY', flex: 1 },
               { key: 'brand', label: 'BRAND', flex: 1 },

@@ -270,7 +270,7 @@ export default function DeliveryTrackingScreen() {
                       </Col>
                       <Col md={3}>
                         <span>
-                          {item.quantity} x ${item.price}
+                          {item.quantity} x ${Number(item.price).toFixed(2)}
                         </span>
                       </Col>
                       <Col md={3}>
