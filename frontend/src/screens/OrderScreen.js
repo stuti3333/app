@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React from 'react';
-import { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import LoadingBox from '../components/LoadingBox';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { Helmet } from 'react-helmet-async';
@@ -47,6 +46,11 @@ export default function OrderScreen() {
       loadingPay: false,
     });
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [imageErrors, setImageErrors] = useState({});
+
+  const handleImageError = (itemId) => {
+    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
+  };
 
   function createOrder(data, actions) {
     return actions.order.create({
@@ -200,12 +204,15 @@ export default function OrderScreen() {
                       <Col md={6}>
                         <img
                           src={
-                            item.image.startsWith('/')
-                              ? item.image
-                              : `/${item.image}`
+                            imageErrors[item._id]
+                              ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOTk5Ij5JbWFnZSBOb3QgQXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg=='
+                              : item.image.startsWith('/')
+                                ? item.image
+                                : `/${item.image}`
                           }
                           alt={item.name}
                           className="img-fluid rounded img-thumbnail"
+                          onError={() => handleImageError(item._id)}
                         ></img>{' '}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </Col>

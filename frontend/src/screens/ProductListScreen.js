@@ -91,7 +91,7 @@ export default function ProductListScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <table className="table">
+          <table className="table admin-table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -99,20 +99,22 @@ export default function ProductListScreen() {
                 <th>PRICE</th>
                 <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
+                  <td>{product._id.substring(product._id.length - 6)}</td>
                   <td>{product.name}</td>
-                  <td>{product.price}</td>
+                  <td>${product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
                     <Button
                       type="button"
                       variant="light"
+                      className="admin-btn-primary"
                       onClick={() => navigate(`/admin/product/${product._id}`)}
                     >
                       Edit

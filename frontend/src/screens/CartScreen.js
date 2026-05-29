@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import { Row, Col } from 'react-bootstrap';
@@ -15,6 +15,11 @@ export default function CartScreen() {
   const {
     cart: { items },
   } = state;
+  const [imageErrors, setImageErrors] = useState({});
+
+  const handleImageError = (itemId) => {
+    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
+  };
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/products/${item._id}`,
@@ -54,9 +59,16 @@ export default function CartScreen() {
                   <Row className="align-items-center">
                     <Col md={4}>
                       <img
-                        src={item.image}
+                        src={
+                          imageErrors[item._id]
+                            ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOTk5Ij5JbWFnZSBOb3QgQXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg=='
+                            : item.image.startsWith('/')
+                              ? item.image
+                              : `/${item.image}`
+                        }
                         alt={item.name}
                         className="img-fluid rounded img-thumbnail"
+                        onError={() => handleImageError(item._id)}
                       ></img>{' '}
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>

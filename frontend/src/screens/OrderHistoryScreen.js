@@ -62,7 +62,7 @@ export default function OrderHistoryScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
+        <table className="table admin-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -76,9 +76,9 @@ export default function OrderHistoryScreen() {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>{order._id}</td>
+                <td>{order._id.substring(order._id.length - 6)}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
+                <td>${order.totalPrice.toFixed(2)}</td>
                 <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
                 <td>
                   {order.isDelivered
@@ -89,6 +89,7 @@ export default function OrderHistoryScreen() {
                   <Button
                     type="button"
                     variant="light"
+                    className="admin-btn-primary"
                     onClick={() => {
                       navigate(`/order/${order._id}`);
                     }}
