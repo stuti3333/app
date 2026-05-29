@@ -49,6 +49,9 @@ export default function UserListScreen() {
     useReducer(reducer, {
       loading: true,
       error: '',
+      users: [],
+      loadingDelete: false,
+      successDelete: false,
     });
 
   const { state } = useContext(Store);

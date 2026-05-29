@@ -50,6 +50,9 @@ export default function OrderListScreen() {
     useReducer(reducer, {
       loading: true,
       error: '',
+      orders: [],
+      loadingDelete: false,
+      successDelete: false,
     });
 
   const navigate = useNavigate();
