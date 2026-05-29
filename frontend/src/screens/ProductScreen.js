@@ -4,7 +4,7 @@ import { Row, Col, ListGroup, Badge } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -32,6 +32,11 @@ function ProductScreen() {
     error: '',
     product: [],
   });
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -75,11 +80,14 @@ function ProductScreen() {
           <img
             className="img-large"
             src={
-              product.image.startsWith('http')
-                ? product.image
-                : `/${product.image}`
+              imageError
+                ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOTk5Ij5JbWFnZSBOb3QgQXZhaWxhYmxlPC90ZXh0Pjwvc3ZnPg=='
+                : product.image.startsWith('http')
+                  ? product.image
+                  : `/${product.image}`
             }
             alt={product.name}
+            onError={handleImageError}
           />
         </Col>
         <Col md={3}>

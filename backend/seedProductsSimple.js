@@ -693,6 +693,12 @@ Object.keys(categoryData).forEach((category) => {
   products.push(...categoryProducts);
 });
 
+// Log sample slugs for debugging
+console.log('\nSample product slugs:');
+products.slice(0, 5).forEach((product) => {
+  console.log(`${product.name} -> ${product.slug}`);
+});
+
 const seedProducts = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -705,6 +711,20 @@ const seedProducts = async () => {
     // Insert new products
     await Product.insertMany(products);
     console.log('Products seeded successfully');
+
+    // Verify a sample product exists
+    const sampleProduct = await Product.findOne({
+      slug: 'kindle-paperwhite-electronics-1',
+    });
+    if (sampleProduct) {
+      console.log(
+        'Sample product found:',
+        sampleProduct.name,
+        sampleProduct.slug,
+      );
+    } else {
+      console.log('Sample product not found');
+    }
 
     // Count products per category
     const categoryCounts = {};
