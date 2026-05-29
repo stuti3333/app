@@ -16,6 +16,19 @@
   position: relative;
   overflow: hidden;
   height: 250px;
+  background-color: #2a2a2e;
+}
+
+.product-image-container.no-image::after {
+  content: '📷 Image Not Available';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #8b8b8b;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .product-image {

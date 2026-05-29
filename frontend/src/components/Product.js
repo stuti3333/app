@@ -4,6 +4,7 @@ import Rating from './Rating';
 import { useContext, useState } from 'react';
 import { Store } from '../Store';
 import axios from 'axios';
+import { isValidImageUrl } from '../utils';
 import './Product.css';
 
 function Product(props) {
@@ -13,10 +14,10 @@ function Product(props) {
     cart: { items },
   } = state;
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
-  const handleImageError = () => {
-    setImageError(true);
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+    e.target.parentElement.classList.add('no-image');
   };
 
   const addToCartHandler = async (item) => {
@@ -50,15 +51,7 @@ function Product(props) {
       <div className="product-image-container">
         <Link to={`/product/${product.slug}`}>
           <img
-            src={
-              imageError
-                ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzJhMmEyZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOGI4YjhiIj7wn5Oo8J+TqPCfk6k8J+TqPCfk6k8J+TqSDwn5Gm8J+RpvCfkabwn5Gm8J+RpvCfkabwn5GmPC90ZXh0Pjwvc3ZnPg=='
-                : product.image.startsWith('http')
-                  ? product.image
-                  : product.image.startsWith('/')
-                    ? product.image
-                    : `/${product.image}`
-            }
+            src={isValidImageUrl(product.image) ? product.image : null}
             className="card-img-top product-image"
             alt={product.name}
             onError={handleImageError}

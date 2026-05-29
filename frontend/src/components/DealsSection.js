@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Rating from './Rating';
+import { isValidImageUrl } from '../utils';
 import './DealsSection.css';
 
 const reducer = (state, action) => {
@@ -25,10 +26,9 @@ const DealsSection = () => {
     products: [],
   });
 
-  const [imageErrors, setImageErrors] = useState({});
-
-  const handleImageError = (productId) => {
-    setImageErrors((prev) => ({ ...prev, [productId]: true }));
+  const handleImageError = (e, productId) => {
+    e.target.style.display = 'none';
+    e.target.parentElement.classList.add('no-image');
   };
 
   const [timeLeft, setTimeLeft] = useState({
@@ -148,13 +148,11 @@ const DealsSection = () => {
                       <Card.Img
                         variant="top"
                         src={
-                          imageErrors[product._id]
-                            ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzJhMmEyZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOGI4YjhiIj7wn5Oo8J+TqPCfk6k8J+TqPCfk6k8J+TqSDwn5Gm8J+RpvCfkabwn5Gm8J+RpvCfkabwn5GmPC90ZXh0Pjwvc3ZnPg=='
-                            : product.image
+                          isValidImageUrl(product.image) ? product.image : null
                         }
                         alt={product.name}
                         className="deal-image"
-                        onError={() => handleImageError(product._id)}
+                        onError={(e) => handleImageError(e, product._id)}
                       />
                     </div>
                   </Link>

@@ -4,11 +4,11 @@ import { Row, Col, ListGroup, Badge } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { getError } from '../utils';
+import { getError, isValidImageUrl } from '../utils';
 import { useContext } from 'react';
 import { Store } from '../Store';
 const reducer = (state, action) => {
@@ -32,10 +32,10 @@ function ProductScreen() {
     error: '',
     product: [],
   });
-  const [imageError, setImageError] = useState(false);
 
-  const handleImageError = () => {
-    setImageError(true);
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+    e.target.parentElement.classList.add('no-image');
   };
   useEffect(() => {
     const fetchProducts = async () => {
@@ -77,18 +77,40 @@ function ProductScreen() {
     <div>
       <Row>
         <Col md={6}>
-          <img
-            className="img-large"
-            src={
-              imageError
-                ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzJhMmEyZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmaWxsPSIjOGI4YjhiIj7wn5Oo8J+TqPCfk6k8J+TqPCfk6k8J+TqSDwn5Gm8J+RpvCfkabwn5Gm8J+RpvCfkabwn5GmPC90ZXh0Pjwvc3ZnPg=='
-                : product.image.startsWith('http')
-                  ? product.image
-                  : `/${product.image}`
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '1',
+              backgroundColor: '#2a2a2e',
+            }}
+            className="product-image-wrapper"
+          >
+            <img
+              className="img-large"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              src={isValidImageUrl(product.image) ? product.image : null}
+              alt={product.name}
+              onError={handleImageError}
+            />
+          </div>
+          <style>{`
+            .product-image-wrapper.no-image::after {
+              content: '📷 Image Not Available';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: #8b8b8b;
+              font-size: 16px;
+              text-align: center;
+              white-space: nowrap;
             }
-            alt={product.name}
-            onError={handleImageError}
-          />
+          `}</style>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">

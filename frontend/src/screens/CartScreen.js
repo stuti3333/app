@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import { Row, Col } from 'react-bootstrap';
@@ -9,16 +9,17 @@ import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { isValidImageUrl } from '../utils';
 export default function CartScreen() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { items },
   } = state;
-  const [imageErrors, setImageErrors] = useState({});
 
-  const handleImageError = (itemId) => {
-    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
+  const handleImageError = (e, itemId) => {
+    e.target.style.display = 'none';
+    e.target.parentElement.classList.add('no-image');
   };
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(
@@ -58,18 +59,39 @@ export default function CartScreen() {
                 <ListGroup.Item key={item._id}>
                   <Row className="align-items-center">
                     <Col md={4}>
-                      <img
-                        src={
-                          imageErrors[item._id]
-                            ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJhMmEyZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOGI4YjhiIj7wn5Oo8J+TqPCfk6k8J+TqPCfk6k8J+TqSDwn5Gm8J+RpvCfkabwn5Gm8J+RpvCfkabwn5GmPC90ZXh0Pjwvc3ZnPg=='
-                            : item.image.startsWith('/')
-                              ? item.image
-                              : `/${item.image}`
+                      <div
+                        style={{
+                          position: 'relative',
+                          width: '80px',
+                          height: '80px',
+                          backgroundColor: '#2a2a2e',
+                          display: 'inline-block',
+                        }}
+                        className="cart-image-wrapper"
+                      >
+                        <img
+                          src={isValidImageUrl(item.image) ? item.image : null}
+                          alt={item.name}
+                          className="img-fluid rounded img-thumbnail"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                          }}
+                          onError={(e) => handleImageError(e, item._id)}
+                        ></img>
+                      </div>{' '}
+                      <style>{`
+                        .cart-image-wrapper.no-image::after {
+                          content: '📷';
+                          position: absolute;
+                          top: 50%;
+                          left: 50%;
+                          transform: translate(-50%, -50%);
+                          color: #8b8b8b;
+                          font-size: 24px;
                         }
-                        alt={item.name}
-                        className="img-fluid rounded img-thumbnail"
-                        onError={() => handleImageError(item._id)}
-                      ></img>{' '}
+                      `}</style>{' '}
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
