@@ -174,6 +174,21 @@ productRouter.get(
 );
 
 productRouter.get(
+  '/category-counts',
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct('category');
+    const categoryCounts = {};
+
+    for (const category of categories) {
+      const count = await Product.countDocuments({ category });
+      categoryCounts[category] = count;
+    }
+
+    res.send(categoryCounts);
+  }),
+);
+
+productRouter.get(
   '/slug/:slug',
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug });
