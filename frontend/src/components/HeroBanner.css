@@ -58,8 +58,8 @@
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 50px;
-  background: white;
-  color: #667eea;
+  background-color: #6c63ff;
+  color: #ffffff;
   border: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -68,8 +68,8 @@
 .hero-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  background: #f8f9fa;
-  color: #764ba2;
+  background-color: #5a52d5;
+  color: #ffffff;
 }
 
 .hero-image {
@@ -89,8 +89,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .slider-controls {
@@ -162,8 +167,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
@@ -175,24 +184,24 @@
     min-height: auto;
     padding: 40px 0;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.8rem;
   }
-  
+
   .hero-description {
     font-size: 1rem;
   }
-  
+
   .hero-slide-image {
     max-height: 300px;
     margin-top: 30px;
   }
-  
+
   .slider-controls {
     bottom: 20px;
   }
@@ -202,16 +211,16 @@
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.5rem;
   }
-  
+
   .hero-cta {
     padding: 12px 30px;
     font-size: 1rem;
   }
-  
+
   .slider-arrow {
     width: 40px;
     height: 40px;
