@@ -37,7 +37,7 @@ const DealsSection = () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/products/random/5`,
+          `${process.env.REACT_APP_API_URL}/api/products/random-diverse/5`,
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {

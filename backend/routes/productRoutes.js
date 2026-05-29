@@ -198,6 +198,29 @@ productRouter.get(
 );
 
 productRouter.get(
+  '/random-diverse/:limit',
+  expressAsyncHandler(async (req, res) => {
+    const limit = parseInt(req.params.limit) || 5;
+    const categories = await Product.find().distinct('category');
+    const selectedCategories = categories
+      .sort(() => Math.random() - 0.5)
+      .slice(0, limit);
+
+    const products = [];
+    for (const category of selectedCategories) {
+      const categoryProducts = await Product.find({ category });
+      if (categoryProducts.length > 0) {
+        const randomProduct =
+          categoryProducts[Math.floor(Math.random() * categoryProducts.length)];
+        products.push(randomProduct);
+      }
+    }
+
+    res.send(products);
+  }),
+);
+
+productRouter.get(
   '/slug/:slug',
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug });
