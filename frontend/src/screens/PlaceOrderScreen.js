@@ -43,6 +43,11 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
+      console.log(
+        'Sending order request with token:',
+        userInfo.token ? 'Token exists' : 'No token',
+      );
+      console.log('User info:', userInfo);
       const { data } = await Axios.post(
         `${process.env.REACT_APP_API_URL}/api/orders`,
         {
@@ -66,6 +71,8 @@ export default function PlaceOrderScreen() {
       navigate(`/order/${data.order._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
+      console.error('Order error:', err);
+      console.error('Error response:', err.response);
       toast.error(getError(err));
     }
   };
