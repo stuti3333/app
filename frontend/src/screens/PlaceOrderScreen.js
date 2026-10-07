@@ -56,7 +56,7 @@ export default function PlaceOrderScreen() {
         },
         {
           headers: {
-            authorization: `Bearer ${userInfo.token}`,
+            Authorization: `Bearer ${userInfo.token}`,
           },
         },
       );

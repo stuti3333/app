@@ -69,11 +69,11 @@ export default function OrderScreen() {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: 'PAY_REQUEST' });
-        const { data } = await axios.put(
+        const { data } = await axios.post(
           `${process.env.REACT_APP_API_URL}/api/orders/${order._id}/pay`,
           details,
           {
-            headers: { authorization: `Bearer ${userInfo.token}` },
+            headers: { Authorization: `Bearer ${userInfo.token}` },
           },
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
@@ -94,7 +94,7 @@ export default function OrderScreen() {
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/orders/${orderId}`,
           {
-            headers: { authorization: `Bearer ${userInfo.token}` },
+            headers: { Authorization: `Bearer ${userInfo.token}` },
           },
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -115,7 +115,7 @@ export default function OrderScreen() {
         const { data: clientId } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/keys/paypal`,
           {
-            headers: { authorization: `Bearer ${userInfo.token}` },
+            headers: { Authorization: `Bearer ${userInfo.token}` },
           },
         );
         paypalDispatch({
