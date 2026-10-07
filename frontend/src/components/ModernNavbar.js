@@ -12,6 +12,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Store } from '../Store';
 import { useDarkMode } from '../context/DarkModeContext';
 import SearchBox from './SearchBox';
+import { AuroraBars } from './aurora';
 import './ModernNavbar.css';
 
 const ModernNavbar = () => {
@@ -45,6 +46,18 @@ const ModernNavbar = () => {
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
     >
+      <div className="navbar-aurora">
+        <AuroraBars
+          barCount={20}
+          colors={['#667eea', '#764ba2', '#6c63ff', '#5a52d5', '#00000000']}
+          maxHeightRatio={0.6}
+          minHeightRatio={0.1}
+          speed={0.3}
+          gap={2}
+          blur={6}
+          background="transparent"
+        />
+      </div>
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand className="brand-logo">

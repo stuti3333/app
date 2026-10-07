@@ -33,6 +33,8 @@ import UserListScreen from './screens/UserListScreen';
 import DeliveryTrackingScreen from './screens/DeliveryTrackingScreen';
 import { DarkModeProvider } from './context/DarkModeContext';
 import ModernNavbar from './components/ModernNavbar';
+import { AuroraBars } from './components/aurora';
+import './App.css';
 
 function AppContent() {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -60,6 +62,18 @@ function AppContent() {
             : 'd-flex flex-column site-container'
         }
       >
+        <div className="global-aurora-background">
+          <AuroraBars
+            barCount={40}
+            colors={['#667eea', '#764ba2', '#6c63ff', '#5a52d5', '#00000000']}
+            maxHeightRatio={0.7}
+            minHeightRatio={0.1}
+            speed={0.35}
+            gap={3}
+            blur={8}
+            background="transparent"
+          />
+        </div>
         <ToastContainer position="bottom-center" limit={1} />
         <header>
           <ModernNavbar />

@@ -55,6 +55,8 @@ body {
   transition:
     background-color var(--transition-speed),
     color var(--transition-speed);
+  position: relative;
+  z-index: 1;
 }
 
 .site-container {
