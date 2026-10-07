@@ -33,7 +33,7 @@ import UserListScreen from './screens/UserListScreen';
 import DeliveryTrackingScreen from './screens/DeliveryTrackingScreen';
 import { DarkModeProvider } from './context/DarkModeContext';
 import ModernNavbar from './components/ModernNavbar';
-import { AuroraBars } from './components/aurora';
+import { AuroraBars } from './components/AuroraBars';
 import './App.css';
 
 function AppContent() {

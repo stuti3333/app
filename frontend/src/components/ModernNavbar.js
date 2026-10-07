@@ -12,7 +12,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Store } from '../Store';
 import { useDarkMode } from '../context/DarkModeContext';
 import SearchBox from './SearchBox';
-import { AuroraBars } from './aurora';
+import { AuroraBars } from './AuroraBars';
 import './ModernNavbar.css';
 
 const ModernNavbar = () => {
